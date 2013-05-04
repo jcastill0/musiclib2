@@ -1,0 +1,68 @@
+  <div class="container" ng-controller="PlayCtrl">
+    <div class="row">
+      <div class="span6">
+	<h1>{{playlist.name}}</h1>
+      </div>
+      <div class="span4">
+	<button class="btn btn-large btn-primary" type="button" onClick="startPlaying();">Start Playing</button>
+      </div>
+      <div class="span2">
+	<a href="#/playlists">[Back to Playlists]</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span6">
+	<ul class="nav nav-list" id="SongListID">
+	  <li class="nav-header">[{{playlist.songs.length}}] Songs</li>
+	  <li ng-repeat="song in playlist.songs">
+	      <i class="icon-music"></i>{{song.artist}} - {{song.name}}
+	  </li>
+	</ul>
+      </div>
+      <div class="span6">
+	<h4 id="NowPlayingID">Now Playing: </h4>
+	  <audio id="AudioPlayerID" controls>
+	  </audio>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    $.Song = function (id, name, path, artist) {
+	this.id = id;
+	this.name = name;
+	this.path = path;
+	this.artist = artist;
+    };
+    $.PlayList = function (name) {
+	this.name = name;
+	this.songs = [];
+	this.currentSongIX = 0;
+    };
+    var playlist = new $.PlayList('{{ playlist.name }}');
+    (function() {
+	var currSong;
+	{% for song in songs %}
+	currSong = new $.Song({{song.id}},
+		'{{song.name}}','/static/{{song.file}}',
+		'{{song.artist.name}}');
+	playlist.songs.push(currSong);
+	{% endfor %}
+    })();
+    function playNextSong(player) {
+      if (playlist.currentSongIX >= playlist.songs.length) 
+	  return;
+      $('#NowPlayingID').text(
+		'Now Playing: ' + playlist.songs[playlist.currentSongIX].name);
+      player.src = playlist.songs[playlist.currentSongIX].path;
+      player.play();
+      playlist.currentSongIX++;
+    }
+    function startPlaying() {
+	var player = document.getElementById("AudioPlayerID");
+	player.addEventListener('ended', function() {
+		playNextSong(player);
+		}, false);
+	playNextSong(player);
+    };
+  </script>

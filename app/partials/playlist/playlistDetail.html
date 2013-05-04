@@ -1,0 +1,98 @@
+  <div class="container" ng-controller="PlaylistDetailCtrl">
+    <h1>{{ playlist.name }}</h1>
+    <div class="row">
+      <div class="span1">
+      </div>
+      <div class="span5">
+	<select name="sourceList" id="sourceListID" size="20" multiple="multiple">
+	  {% for song in allSongs %}
+	  <option value="{{song.id}}">{{song.artist.name}} - {{song.name}}</option>
+	  {% endfor %}
+	</select>
+      <div class="controls">
+	<a href="#/playlists/">Cancel</a>
+      </div>
+    </div>
+    <div class="span1">
+      <div class="btn-group btn-group-vertical">
+	<button type="submit" class="btn" name="add" value="add" onClick="addItems(sourceList);"><i class="icon-chevron-right"></i></button>
+	<button type="submit" class="btn" name="remove" value="remove" onClick="removeItems();"><i class="icon-chevron-left"></i></button>
+	<button type="submit" class="btn" name="removeAll" value="removeAll" onClick="removeAll();"><i class="icon-backward"></i></button>
+      </div>
+    </div>
+    <div class="span5">
+      <form class="form-horizontal" action="/musicapp/musiclib/playlist/saveSongs/" method="post">
+	  {% csrf_token %}
+	<fieldset>
+	  <div class="control-group">
+	    <div class="controls">
+	      <input type="hidden" id="id_playlistID" name="playlistID" value="{{playlist.id}}">
+	    </div>
+	    <div class="controls">
+	      <select name="playListSongs" id="playListSongsID" size="20" multiple="multiple">
+		  {% for song in playListSongs %}
+		<option name="xx" value="{{song.id}}">{{song.artist.name}} - {{song.name}}</option>
+		  {% endfor %}
+	      </select>
+	    </div>
+	  </div>
+	  <div class="control-group">
+	    <div class="controls">
+	      <button type="submit" class="btn btn-primary" name="saveSongsButton" value="saveSongs" onClick="selectAll();">Save</button>
+	    </div>
+	  </div>
+	</fieldset>
+      </form>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+	function addItems(fromObj) {
+	    var toObj = document.getElementById('playListSongsID');
+	    for (var selIX = fromObj.length - 1; selIX >= 0; selIX--) {
+		if (fromObj.options[selIX].selected) {
+		    var newText = fromObj.options[selIX].text;
+		    var newVal  = fromObj.options[selIX].value;
+			// create new option on target select box
+		    var newOption = new Option(newText, newVal);
+		    toObj[toObj.length] = newOption;
+			// delete the option from the first select box
+		    fromObj[selIX] = null;
+		}
+	    }
+	};
+	function removeItems() {
+	    var toObj = document.getElementById('sourceListID');
+	    var fromObj = document.getElementById('playListSongsID');
+	    for (var selIX = fromObj.length - 1; selIX >= 0; selIX--) {
+		if (fromObj.options[selIX].selected) {
+		    var newText = fromObj.options[selIX].text;
+		    var newVal = fromObj.options[selIX].value;
+			// create new option on target select box
+		    var newOption = new Option(newText, newVal);
+		    toObj[toObj.length] = newOption;
+			// delete the option from the origin select box
+		    fromObj[selIX] = null;
+		}
+	    }
+	};
+	function removeAll() {
+	    var toObj = document.getElementById('sourceListID');
+	    var fromObj = document.getElementById('playListSongsID');
+	    for (var selIX = fromObj.length - 1; selIX >= 0; selIX--) {
+		var newText = fromObj.options[selIX].text;
+		var newVal = fromObj.options[selIX].value;
+		// create new option on target select box
+		var newOption = new Option(newText, newVal);
+		toObj[toObj.length] = newOption;
+		// delete the option from the origin select box
+		fromObj[selIX] = null;
+	    }
+	};
+	function selectAll() {
+	    var newPlayList = document.getElementById('playListSongsID');
+	    for (var selIX = newPlayList.length - 1; selIX >= 0; selIX--) {
+		newPlayList[selIX].selected = true;
+	    }
+	};
+  </script>

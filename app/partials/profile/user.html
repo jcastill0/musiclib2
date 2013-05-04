@@ -1,0 +1,52 @@
+  <div class="container">
+    <form class="form-horizontal" action="/musicapp/musiclib/profile/save/" method="post">
+      {% csrf_token%}
+      <fieldset>
+	<legend>My Profile</legend>
+	<div class="control-group">
+	  <label class="control-label" for="inputLogin">Login name</label>
+	  <div class="controls">
+	    <input type="text" id="inputLogin" placeHolder="Login Name" name="loginName" value="{{ user.username }}"/>
+	  </div>
+	</div>
+	<div class="control-group">
+	  <label class="control-label" for="inputEmail">Email</label>
+	  <div class="controls">
+	      {% if user.email %}
+	    <input type="email" id="inputEmail" name="email" value="{{ user.email }}"/>
+	      {% else %}
+	    <input type="email" id="inputEmail" placeHolder="Email Address" name="email"/>
+	      {% endif %}
+	  </div>
+	</div>
+	<hr/>
+	<div class="control-group">
+	  <label class="control-label" for="inputFirst">First Name</label>
+	  <div class="controls">
+	      {% if user.first_name %}
+	    <input type="text" id="inputFirst" name="firstName" value="{{ user.first_name }}"/>
+	      {% else %}
+	    <input type="text" id="inputFirst" placeHolder="First Name" name="firstName"/>
+	      {% endif %}
+	  </div>
+	</div>
+	<div class="control-group">
+	  <label class="control-label" for="inputLast">Last Name</label>
+	  <div class="controls">
+	      {% if user.last_name %}
+	    <input type="text" id="inputLast" name="lastName" value="{{ user.last_name}}"/>
+	      {% else %}
+            <input type="text" id="inputLast" placeHolder="Last Name" name="lastName"/>
+	      {% endif %}
+	  </div>
+	</div>
+	<hr/>
+	<div class="control-group">
+	  <div class="controls">
+	  </div>
+	  <button type="submit" class="btn btn-primary">Save</button>
+	  <a href="/musicapp/musiclib/profile/">Cancel</a>
+	</div>
+      </fieldset>
+    </form>
+  </div>
