@@ -1,0 +1,15 @@
+{
+    "id": 1,
+    "name": "The Beatles",
+    "songs": [
+	{
+	  "id": 1,
+	  "name": "Today is my birthday"
+	},
+	{
+	  "id": 3,
+	  "name": "Help"
+	}
+    ]
+}
+
