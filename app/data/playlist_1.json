@@ -4,13 +4,15 @@
     "songs": [
 	{
 	  "id": 1,
-	  "name": "Today is my birthday",
-	  "artist": "The Beatles"
+	  "name": "Revolution",
+	  "artist": "The Beatles",
+	  "path": "data/songs/The Beatles - Revolution.mp3"
 	},
 	{
 	  "id": 2,
-	  "name": "XYZ",
-	  "artist": "Led Zeppelin"
+	  "name": "Black Dog",
+	  "artist": "Led Zeppelin",
+	  "path": "data/songs/Led Zeppelin - Black Dog.mp3"
 	}
     ]
 }

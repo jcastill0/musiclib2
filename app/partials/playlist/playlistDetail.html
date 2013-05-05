@@ -1,13 +1,11 @@
   <div class="container" ng-controller="PlaylistDetailCtrl">
-    <h1>{{ playlist.name }}</h1>
+    <h1>{{playlist.name}}</h1>
     <div class="row">
       <div class="span1">
       </div>
       <div class="span5">
 	<select name="sourceList" id="sourceListID" size="20" multiple="multiple">
-	  {% for song in allSongs %}
-	  <option value="{{song.id}}">{{song.artist.name}} - {{song.name}}</option>
-	  {% endfor %}
+	  <option value="{{song.id}}" ng-repeat="song in songs">{{song.artist}} - {{song.name}}</option>
 	</select>
       <div class="controls">
 	<a href="#/playlists/">Cancel</a>
@@ -30,9 +28,7 @@
 	    </div>
 	    <div class="controls">
 	      <select name="playListSongs" id="playListSongsID" size="20" multiple="multiple">
-		  {% for song in playListSongs %}
-		<option name="xx" value="{{song.id}}">{{song.artist.name}} - {{song.name}}</option>
-		  {% endfor %}
+		<option name="xx" value="{{song.id}}" ng-repeat="song in playlist.songs">{{song.artist}} - {{song.name}}</option>
 	      </select>
 	    </div>
 	  </div>

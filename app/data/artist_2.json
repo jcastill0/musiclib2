@@ -4,7 +4,8 @@
     "songs": [
 	{
 	  "id": 4,
-	  "name": "Imagine"
+	  "name": "Imagine",
+	  "path": "data/songs/John Lennon - Imagine.mp3"
 	}
     ]
 }

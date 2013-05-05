@@ -4,13 +4,15 @@
     "songs": [
 	{
 	  "id": 3,
-	  "name": "Help",
-	  "artist": "The Beatles"
+	  "name": "Help!",
+	  "artist": "The Beatles",
+	  "path": "data/songs/The Beatles - Help!.m4a"
 	},
 	{
 	  "id": 4,
 	  "name": "Imagine",
-	  "artist": "John Lennon"
+	  "artist": "John Lennon",
+	  "path": "data/songs/John Lennon - Imagine.mp3"
 	}
     ]
 }

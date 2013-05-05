@@ -39,12 +39,12 @@
 	this.songs = [];
 	this.currentSongIX = 0;
     };
-    var playlist = new $.PlayList('{{ playlist.name }}');
+    var playlist = new $.PlayList('{{playlist.name}}');
     (function() {
 	var currSong;
 	{% for song in songs %}
 	currSong = new $.Song({{song.id}},
-		'{{song.name}}','/static/{{song.file}}',
+		'{{song.name}}','{{song.path}}',
 		'{{song.artist.name}}');
 	playlist.songs.push(currSong);
 	{% endfor %}

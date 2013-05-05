@@ -1,7 +1,7 @@
   <div class="container" ng-controller="ArtistDetailCtrl">
     <div class="row">
       <div class="span10">
-	<h1>{{ artist.name }}</h1>
+	<h1>{{artist.name}}</h1>
       </div>
     <div class="span2">
       <a href="#/artists">[Back to Artists]</a>
@@ -11,35 +11,31 @@
    {% csrf_token %}
     <div class="row">
       <div class="span8">
-	{% for song in songs %}
 	<fieldset>
-	  <div class="row">
+	  <div class="row" ng-repeat="song in artist.songs">
 	    <div class="span1">
 	      <i class="icon-music"></i>
 	    </div>
 	    <div class="span6">
-	      <a href="/static/{{ song.file }}">{{ song.name }}</a>
+	      <a href="{{song.path}}">{{song.name}}</a>
             </div>
 	    <div class="span1">
 	      <input id="Sid_{{song.id}}" type="checkbox" name="playListSongs" value="{{song.id}}"/>
 	    </div>
 	  </div>
 	</fieldset>
-	{% endfor %}
       </div>
       <div class="span4">
 	<h3>Playlists</h3>
 	<fieldset>
-	{% for playlist in playlists %}
-	  <div class="row">
+	  <div class="row" ng-repeat="playlist in playlists">
 	    <div class="span3">
-	      {{ playlist.name }}
+	      {{playlist.name}}
 	    </div>
 	    <div class="span1">
 	      <input id="Pid_{{playlist.id}}" type="radio" name="playlistID" value="{{playlist.id}}"/>
 	    </div>
 	  </div>
-	  {% endfor %}
 	</fieldset>
 	<div class="row">
 	  <div class="span4">

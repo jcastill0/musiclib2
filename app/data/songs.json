@@ -1,0 +1,32 @@
+[
+    {
+	"id": 1,
+	"name": "Revolution",
+	"artist": "The Beatles",
+	"path": "data/songs/The Beatles - Revolution.mp3"
+    },
+    {
+	"id": 2,
+	"name": "Black Dog",
+	"artist": "Led Zeppelin",
+	"path": "data/songs/Led Zeppelin - Black Dog.mp3"
+    },
+    {
+	"id": 3,
+	"name": "Help!",
+	"artist": "The Beatles",
+	"path": "data/songs/The Beatles - Help!.m4a"
+    },
+    {
+	"id": 4,
+	"name": "Imagine",
+	"artist": "John Lennon",
+	"path": "data/songs/John Lennon - Imagine.mp3"
+    },
+    {
+	"id": 5,
+	"name": "No ha parado de llover",
+	"artist": "Mana",
+	"path": "data/songs/Mana - No ha parado de llover.mp3"
+    }
+]

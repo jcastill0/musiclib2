@@ -33,6 +33,9 @@ function PlaylistDetailCtrl ($scope, $http, $routeParams) {
   $http.get('data/playlist_' + $routeParams.playlistID + '.json').success(function(data) {
 	$scope.playlist = data;
   });
+  $http.get('data/songs.json').success(function(data) {
+	$scope.songs = data;
+  });
 }
 PlaylistDetailCtrl.$inject = ['$scope', '$http', '$routeParams'];
 
@@ -45,7 +48,10 @@ ArtistCtrl.$inject = ['$scope', '$http'];
 
 function ArtistDetailCtrl ($scope, $http, $routeParams) {
   $http.get('data/artist_' + $routeParams.artistID + '.json').success(function(data) {
-	$scope.artists = data;
+	$scope.artist = data;
+  });
+  $http.get('data/playlists.json').success(function(data) {
+	$scope.playlists = data;
   });
 }
 ArtistDetailCtrl.$inject = ['$scope', '$http', '$routeParams'];

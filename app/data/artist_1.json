@@ -4,11 +4,13 @@
     "songs": [
 	{
 	  "id": 1,
-	  "name": "Today is my birthday"
+	  "name": "Revolution",
+	  "path": "data/songs/The Beatles - Revolution.mp3"
 	},
 	{
 	  "id": 3,
-	  "name": "Help"
+	  "name": "Help!",
+	  "path": "data/songs/The Beatles - Help!.m4a"
 	}
     ]
 }
