@@ -2,7 +2,7 @@
 
 
 // Declare app level module which depends on filters, and services
-var app = angular.module('myMusicLib', ['myMusicLib.filters', 'myMusicLib.directives']);
+var app = angular.module('myMusicLib', ['ngResource', 'myMusicLib.filters', 'myMusicLib.directives']);
 
 app.config(function($routeProvider) {
     $routeProvider
