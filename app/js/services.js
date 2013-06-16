@@ -21,7 +21,18 @@ app.service('userService', function ($http) {
     };
 });
 
-app.factory('User', function ($resource, $routeParams) {
-  var userRsrc = $resource('data/user_' +$routeParams.userID +'.json');
+
+app.factory('User', function ($resource) {
+  var userRsrc = $resource('data/users/:userID.json', {userID:'@userID'}, {});
   return (userRsrc);
 });
+
+/*
+app.factory('User', function ($resource, $routeParams) {
+  var userRsrc = $resource('data/user/' + $routeParams.userID + '.json');
+  return (userRsrc);
+});
+*/
+
+
+

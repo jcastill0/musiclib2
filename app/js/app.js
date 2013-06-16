@@ -46,7 +46,7 @@ app.config(function($routeProvider) {
 		templateUrl: 'partials/artist/artistDetail.html',
 		controller: 'ArtistDetailCtrl'
 	    })
-	.when('/user/:userID',
+	.when('/users/:userID',
 	    {
 		templateUrl: 'partials/profile/userDetail.html',
 		controller: 'UserDetailCtrl'

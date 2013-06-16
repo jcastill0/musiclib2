@@ -56,19 +56,12 @@ app.controller('ArtistDetailCtrl', function($scope, $http, $routeParams) {
 //ArtistDetailCtrl.$inject = ['$scope', '$http', '$routeParams'];
 
 app.controller('UserDetailCtrl', function($scope, $routeParams, User) {
-  $scope.user = User.get();
+  $scope.user = User.get({userID:$routeParams.userID});
 });
-/*app.controller('UserDetailCtrl', function($scope, $routeParams, $resource) {
+/*
+app.controller('UserDetailCtrl', function($scope, $routeParams, $resource) {
   var userRsrc = $resource('data/user_' +$routeParams.userID +'.json');
   $scope.user = userRsrc.get();
 });
-app.controller('UserDetailCtrl', function($scope, $routeParams, $http) {
-  $http.get('data/user_'+$routeParams.userID+'.json').success(function(data) {
-	$scope.user = data;
-  });
-});
-app.controller('UserDetailCtrl', function($scope, $routeParams, userService) {
-  $scope.user = userService.getUserDetail($routeParams.userID);
-});*/
-//UserDetailCtrl.$inject = ['$scope', '$http', '$routeParams'];*/
+*/
 
