@@ -27,12 +27,14 @@ app.factory('User', function ($resource) {
   return (userRsrc);
 });
 
-/*
-app.factory('User', function ($resource, $routeParams) {
-  var userRsrc = $resource('data/user/' + $routeParams.userID + '.json');
-  return (userRsrc);
+app.factory('Artist', function ($resource) {
+  var artistRsrc = $resource('data/artists/:artistID.json', {artistID:'@artistID'}, {});
+  return (artistRsrc);
 });
-*/
 
+app.factory('Playlist', function ($resource) {
+  var playlistRsrc = $resource('data/playlists/:playlistID.json', {playlistID:'@playlistID'}, {});
+  return (playlistRsrc);
+});
 
 
