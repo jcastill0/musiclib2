@@ -14,17 +14,13 @@ app.controller('MyCtrl1', function() {});
 app.controller('MyCtrl2', function() {});
 app.controller('WelcomeCtrl', function() {});
 
-app.controller('PlaylistCtrl', function($scope, $http) {
-  $http.get('data/playlists/playlists.json').success(function(data) {
-	$scope.playlists = data;
-  });
+app.controller('PlaylistCtrl', function($scope, Playlist) {
+  $scope.playlists = Playlist.query();
 });
-//PlaylistCtrl.$inject = ['$scope', '$http'];
 
-app.controller('PlayCtrl', function($scope, $http, $routeParams, Playlist) {
+app.controller('PlayCtrl', function($scope, $routeParams, Playlist) {
   $scope.playlist = Playlist.get({playlistID:$routeParams.playlistID});
 });
-//PlayCtrl.$inject = ['$scope', '$http', '$routeParams'];
 
 app.controller('PlaylistDetailCtrl', function($scope, $http, $routeParams, Playlist) {
   $scope.playlist = Playlist.get({playlistID:$routeParams.playlistID});
@@ -33,23 +29,15 @@ app.controller('PlaylistDetailCtrl', function($scope, $http, $routeParams, Playl
 	$scope.songs = data;
   });
 });
-//PlaylistDetailCtrl.$inject = ['$scope', '$http', '$routeParams'];
 
-app.controller('ArtistCtrl', function($scope, $http) {
-  $http.get('data/artists/artists.json').success(function(data) {
-	$scope.artists = data;
-  });
+app.controller('ArtistCtrl', function($scope, Artist) {
+  $scope.artists = Artist.query();
 });
-//ArtistCtrl.$inject = ['$scope', '$http'];
 
-app.controller('ArtistDetailCtrl', function($scope, $http, $routeParams, Artist) {
+app.controller('ArtistDetailCtrl', function($scope, $routeParams, Artist, Playlist) {
   $scope.artist = Artist.get({artistID:$routeParams.artistID});
-
-  $http.get('data/playlists/playlists.json').success(function(data) {
-	$scope.playlists = data;
-  });
+  $scope.playlists = Playlist.query();
 });
-//ArtistDetailCtrl.$inject = ['$scope', '$http', '$routeParams'];
 
 app.controller('UserDetailCtrl', function($scope, $routeParams, User) {
   $scope.user = User.get({userID:$routeParams.userID});

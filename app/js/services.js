@@ -28,12 +28,22 @@ app.factory('User', function ($resource) {
 });
 
 app.factory('Artist', function ($resource) {
-  var artistRsrc = $resource('data/artists/:artistID.json', {artistID:'@artistID'}, {});
+  var artistRsrc = $resource('data/artists/:artistID.json',
+	  {artistID:'@artistID'},
+	  {query: {
+		method:'GET', params:{artistID:'artists'}, isArray:true
+		}
+	  });
   return (artistRsrc);
 });
 
 app.factory('Playlist', function ($resource) {
-  var playlistRsrc = $resource('data/playlists/:playlistID.json', {playlistID:'@playlistID'}, {});
+  var playlistRsrc = $resource('data/playlists/:playlistID.json',
+	  {playlistID:'@playlistID'},
+	  {query: {
+		method:'GET', params:{playlistID:'playlists'}, isArray:true
+		}
+	  });
   return (playlistRsrc);
 });
 
