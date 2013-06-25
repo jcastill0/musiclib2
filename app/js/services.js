@@ -23,7 +23,15 @@ app.service('userService', function ($http) {
 
 
 app.factory('User', function ($resource) {
-  var userRsrc = $resource('data/users/:userID.json', {userID:'@userID'}, {});
+  var userRsrc = $resource('data/users/:userID.json',
+	  {userID:'@userID'},
+	  {get: {
+		method: 'GET'
+		},
+	   save: {
+		method:'POST'
+		}
+	  });
   return (userRsrc);
 });
 
@@ -45,6 +53,16 @@ app.factory('Playlist', function ($resource) {
 		}
 	  });
   return (playlistRsrc);
+});
+
+app.factory('Song', function ($resource) {
+  var songRsrc = $resource('data/songs/:songID.json',
+	  {songID:'@songID'},
+	  {query: {
+		method:'GET', params:{songID:'songs'}, isArray:true
+		}
+	  });
+  return (songRsrc);
 });
 
 

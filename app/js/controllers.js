@@ -22,12 +22,9 @@ app.controller('PlayCtrl', function($scope, $routeParams, Playlist) {
   $scope.playlist = Playlist.get({playlistID:$routeParams.playlistID});
 });
 
-app.controller('PlaylistDetailCtrl', function($scope, $http, $routeParams, Playlist) {
+app.controller('PlaylistDetailCtrl', function($scope, $routeParams, Playlist, Song) {
   $scope.playlist = Playlist.get({playlistID:$routeParams.playlistID});
-
-  $http.get('data/songs/songs.json').success(function(data) {
-	$scope.songs = data;
-  });
+  $scope.songs = Song.query();
 });
 
 app.controller('ArtistCtrl', function($scope, Artist) {
@@ -39,7 +36,15 @@ app.controller('ArtistDetailCtrl', function($scope, $routeParams, Artist, Playli
   $scope.playlists = Playlist.query();
 });
 
-app.controller('UserDetailCtrl', function($scope, $routeParams, User) {
+app.controller('UserDetailCtrl', function($scope, $routeParams, $log, $location, User) {
   $scope.user = User.get({userID:$routeParams.userID});
+
+  $scope.save = function () {
+	$log.log($scope.user.firstName);
+	User.save({userID:$routeParams.userID}, $scope.user, function(user) {
+		$log.log (user);
+	});
+	$location.path('/');
+  };
 });
 
