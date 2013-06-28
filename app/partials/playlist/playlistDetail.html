@@ -1,8 +1,8 @@
   <div class="container" ng-controller="PlaylistDetailCtrl">
     <div class="control-group">
-      <label class="control-label" for="inputName">Playlist name</label>
+      <label class="control-label" for="inputName">Playlist</label>
       <div class="controls">
-	<input type="text" id="inputName" name="PlaylistName" value="{{playlist.name}}" required/>
+	<input type="text" id="inputName" placeHolder="Playlist name" name="PlaylistName" ng-model="playlist.name" required/>
       </div>
     </div>
     <div class="row">
