@@ -31,9 +31,9 @@
 	<hr/>
 	<div class="control-group">
 	  <div class="controls">
-	    <input type="submit" id="updateUser" value="Save" class="btn btn-primary"/>
-	    <a href="#/playlists">Cancel</a>
 	  </div>
+	  <input type="submit" id="updateUser" value="Save" class="btn btn-primary"/>
+	  <a href="#/playlists">Cancel</a>
 	</div>
       </fieldset>
     </form>
