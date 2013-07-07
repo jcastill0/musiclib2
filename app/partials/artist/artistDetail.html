@@ -7,48 +7,31 @@
       <a href="#/artists">[Back to Artists]</a>
     </div>
   </div>
-  <form class="form-horizontal" action="/musicapp/musiclib/playlist/saveSongs/" method="post">
+  <form class="form-horizontal" ng-submit="save()">
    {% csrf_token %}
     <div class="row">
       <div class="span8">
-	<fieldset>
-	  <div class="row" ng-repeat="song in artist.songs">
-	    <div class="span1">
-	      <i class="icon-music"></i>
-	    </div>
-	    <div class="span6">
-	      <a href="{{song.path}}">{{song.name}}</a>
-            </div>
-	    <div class="span1">
-	      <input id="Sid_{{song.id}}" type="checkbox" name="playListSongs" value="{{song.id}}"/>
-	    </div>
-	  </div>
-	</fieldset>
+	<input type="text" ng-model="searchSong" class="search-query" placeHolder="Search"/>
+	<ul class="unstyled">
+	  <li ng-repeat="song in artist.songs | filter:searchSong | orderBy:'name'">
+	    <input type="checkbox" ng-model="checkedValue" ng-click="songChecked(song, checkedValue)"/>
+	    <a href="{{song.path}}">{{song.name}}</a>
+          </li>
+	</ul>
       </div>
       <div class="span4">
-	<h3>Playlists</h3>
+	<legend>Playlists</legend>
 	<fieldset>
-	  <div class="row" ng-repeat="playlist in playlists">
-	    <div class="span3">
-	      {{playlist.name}}
-	    </div>
-	    <div class="span1">
-	      <input id="Pid_{{playlist.id}}" type="radio" name="playlistID" value="{{playlist.id}}"/>
-	    </div>
-	  </div>
+	  <ul class="unstyled">
+	    <li ng-repeat="playlist in playlists | orderBy:'name'">
+	      <!--input id="Pid_{{playlist.id}}" type="radio" name="playlistID" value="{{playlist.id}}" ng-model="playlist.id"/-->
+	      <input type="radio" ng-model="selectedValue" value="playlist.name" ng-click="playlistSelected(playlist)"/>
+	      <span>{{playlist.name}}</span>
+	    </li>
+	  </ul>
+	  <hr/>
+	  <input type="submit" class="btn btn-primary" id="addSongsToPlaylist" value="Add Songs"/>
 	</fieldset>
-	<div class="row">
-	  <div class="span4">
-	    <hr/>
-	  </div>
-	</div>
-	<div class="row">
-	  <div class="span2">
-	  </div>
-	  <div class="span2">
-	    <button type="submit" class="btn btn-primary" name="addSongsToPlaylist" value="addSongsToPlaylist">Add Songs</button>
-	  </div>
-	</div>
       </div>
     </div>
   </form>
