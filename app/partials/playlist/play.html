@@ -4,10 +4,10 @@
 	<h1>{{playlist.name}}</h1>
       </div>
       <div class="span4">
-	<button class="btn btn-large btn-primary" type="button" onClick="startPlaying();">Start Playing</button>
+	<button class="btn btn-large btn-primary" type="button" ng-click="startPlaying();">Start Playing</button>
       </div>
       <div class="span2">
-	<a href="#/playlists">[Back to Playlists]</a>
+	<a ng-href="#/playlists">[Back to Playlists]</a>
       </div>
     </div>
     <div class="row">
@@ -21,13 +21,13 @@
       </div>
       <div class="span6">
 	<h4 id="NowPlayingID">Now Playing: </h4>
-	  <audio id="AudioPlayerID" controls>
-	  </audio>
+	<audio id="AudioPlayerID" controls="controls">
+	</audio>
       </div>
     </div>
   </div>
 
-  <script type="text/javascript">
+  <!--script type="text/javascript">
     $.Song = function (id, name, path, artist) {
 	this.id = id;
 	this.name = name;
@@ -65,4 +65,4 @@
 		}, false);
 	playNextSong(player);
     };
-  </script>
+  </script-->

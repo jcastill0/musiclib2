@@ -20,13 +20,22 @@ app.controller('PlaylistCtrl', function($scope, Playlist) {
 
 /////////////////////////////////
 
-app.controller('PlayCtrl', function($scope, $routeParams, Playlist) {
+app.controller('PlayCtrl', function($scope, $routeParams, Playlist, $log, $document) {
   $scope.playlist = Playlist.get({playlistID:$routeParams.playlistID});
+  var player = angular.element($document).find("AudioPlayerID");
+  $scope.startPlaying = function () {
+      angular.forEach($scope.playlist.songs, function(song) {
+	$log.log("Playing: " + song.name);
+	player.src = song.path;
+	player.play();
+    });
+
+  };
 });
 
 //////////////////////////////////
 
-app.controller('PlaylistDetailCtrl', function($scope, $routeParams, Playlist, Song, $log, $location) {
+app.controller('PlaylistDetailCtrl', function($scope, $routeParams, Playlist, Song, $location) {
   $scope.playlist = Playlist.get({playlistID:$routeParams.playlistID});
   $scope.songs = Song.query();
 
@@ -48,8 +57,8 @@ app.controller('PlaylistDetailCtrl', function($scope, $routeParams, Playlist, So
     $log.log($scope.playlist.name);
     Playlist.save({playlistID:$routeParams.playlistID}, $scope.playlist, function (playlist) {
 	$log.log(playlist);
+	$location.path('/');
     });
-    $location.path('/');
   };
 });
 
@@ -60,7 +69,7 @@ app.controller('ArtistCtrl', function($scope, Artist) {
 });
 
 
-app.controller('ArtistDetailCtrl', function($scope, $routeParams, $log, $location, Artist, Playlist, $window) {
+app.controller('ArtistDetailCtrl', function($scope, $routeParams, $log, $location, Artist, Playlist) {
   $scope.artist = Artist.get({artistID:$routeParams.artistID});
   $scope.playlists = Playlist.query();
   var songs = [];
@@ -68,12 +77,12 @@ app.controller('ArtistDetailCtrl', function($scope, $routeParams, $log, $locatio
 
   $scope.save = function() {
     if (selectedPlaylist == null) {
-	$window.alert("Must select a Playlist first");
+	alert("Must select a Playlist first");
 	return;
     }
     if (songs.length <= 0) {
-	$window.alert("No songs added");
-	$location.path("/");
+	alert("No songs added");
+	return;
     }
     $log.log(selectedPlaylist.name);
     angular.forEach (songs, function (song) {
@@ -81,8 +90,8 @@ app.controller('ArtistDetailCtrl', function($scope, $routeParams, $log, $locatio
     });
     Playlist.save({playlistID:selectedPlaylist.id}, selectedPlaylist, function (playlist) {
 	$log.log(playlist);
+	$location.path('/');
     });
-    $location.path('/');
   };
 
   function addSongToPlaylist(song) {
