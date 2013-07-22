@@ -82,6 +82,8 @@ StaticServlet.MimeMap = {
   'jpeg': 'image/jpeg',
   'gif': 'image/gif',
   'png': 'image/png',
+  'mp3': 'audio/mp3',
+  'mp4': 'audio/mp4',
   'svg': 'image/svg+xml'
 };
 

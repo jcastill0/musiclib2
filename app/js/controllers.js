@@ -22,15 +22,19 @@ app.controller('PlaylistCtrl', function($scope, Playlist) {
 
 app.controller('PlayCtrl', function($scope, $routeParams, Playlist, $log, $document) {
   $scope.playlist = Playlist.get({playlistID:$routeParams.playlistID});
-  var player = angular.element($document).find("AudioPlayerID");
+  var player = $document[0].getElementById('AudioPlayerID');
+  $log.log(player);
   $scope.startPlaying = function () {
       angular.forEach($scope.playlist.songs, function(song) {
 	$log.log("Playing: " + song.name);
 	player.src = song.path;
+	$log.log(player.src);
 	player.play();
     });
-
   };
+  angular.element.bind('ended', function() {
+	$log.log ("I'm here");
+  });
 });
 
 //////////////////////////////////
