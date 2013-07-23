@@ -20,38 +20,39 @@ app.controller('PlaylistCtrl', function($scope, Playlist) {
 
 /////////////////////////////////
 
-app.controller('PlayCtrl', function($scope, $routeParams, Playlist, $log, $document) {
+app.controller('PlayCtrl', function($scope, $routeParams, Playlist, $log, audioControl) {
   $scope.playlist = Playlist.get({playlistID:$routeParams.playlistID});
-  var player = $document[0].getElementById('AudioPlayerID');
   var ix = 0;
-  $log.log("YYY: " + $scope.playlist.songs);
-  player.addEventListener('ended', function() {
+  $scope.currentlyPlaying = null;
+  audioControl.addEventListener('ended', function() {
       ix = ix + 1;
-      $log.log("ZZZ: " + ix);
       if (ix >= $scope.playlist.songs.length) {
-	  $log.log("XXX: " + ix);
 	  return;
       }
       var song = $scope.playlist.songs[ix];
-      $log.log("Play1[" + ix + "]");
-      $log.log(song.name);
-      player.src = song.path;
-      player.play();
+      $log.log("Play["+ix+"]: " + song.name);
+      audioControl.src = song.path;
+      audioControl.play();
+      $scope.currentlyPlaying = song.name;
   });
 
   $scope.startPlaying = function () {
       ix = 0;
+      if ($scope.playlist.songs.length == 0) {
+	  alert("Empty Playlist");
+	  return;
+      }
       var song = $scope.playlist.songs[ix];
-      $log.log("Play2[" + ix + "]");
-      $log.log(song.name);
-      player.src = song.path;
-      player.play();
+      $log.log("Play["+ix+"]: " + song.name);
+      audioControl.src = song.path;
+      audioControl.play();
+      $scope.currentlyPlaying = song.name;
   };
 });
 
 //////////////////////////////////
 
-app.controller('PlaylistDetailCtrl', function($scope, $routeParams, Playlist, Song, $location) {
+app.controller('PlaylistDetailCtrl', function($scope, $routeParams, Playlist, Song, $location, $log) {
   $scope.playlist = Playlist.get({playlistID:$routeParams.playlistID});
   $scope.songs = Song.query();
 

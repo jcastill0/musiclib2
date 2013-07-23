@@ -66,3 +66,8 @@ app.factory('Song', function ($resource) {
 });
 
 
+app.factory('audioControl', function ($document) {
+  var player = $document[0].getElementById('AudioPlayerID');
+  return (player);
+});
+
