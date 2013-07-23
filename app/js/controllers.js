@@ -23,18 +23,30 @@ app.controller('PlaylistCtrl', function($scope, Playlist) {
 app.controller('PlayCtrl', function($scope, $routeParams, Playlist, $log, $document) {
   $scope.playlist = Playlist.get({playlistID:$routeParams.playlistID});
   var player = $document[0].getElementById('AudioPlayerID');
-  $log.log(player);
-  $scope.startPlaying = function () {
-      angular.forEach($scope.playlist.songs, function(song) {
-	$log.log("Playing: " + song.name);
-	player.src = song.path;
-	$log.log(player.src);
-	player.play();
-    });
-  };
-  angular.element.bind('ended', function() {
-	$log.log ("I'm here");
+  var ix = 0;
+  $log.log("YYY: " + $scope.playlist.songs);
+  player.addEventListener('ended', function() {
+      ix = ix + 1;
+      $log.log("ZZZ: " + ix);
+      if (ix >= $scope.playlist.songs.length) {
+	  $log.log("XXX: " + ix);
+	  return;
+      }
+      var song = $scope.playlist.songs[ix];
+      $log.log("Play1[" + ix + "]");
+      $log.log(song.name);
+      player.src = song.path;
+      player.play();
   });
+
+  $scope.startPlaying = function () {
+      ix = 0;
+      var song = $scope.playlist.songs[ix];
+      $log.log("Play2[" + ix + "]");
+      $log.log(song.name);
+      player.src = song.path;
+      player.play();
+  };
 });
 
 //////////////////////////////////
