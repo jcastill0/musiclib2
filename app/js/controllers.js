@@ -8,17 +8,22 @@ angular.module('myMusicLib.controllers', [])
   .controller('MyCtrl2',      [function() {}])
   .controller('PlaylistCtrl', [function($scope) {
   }]);
-*/
-
 app.controller('MyCtrl1', function() {});
 app.controller('MyCtrl2', function() {});
+*/
 app.controller('WelcomeCtrl', function() {});
+
+///////////////////////////////
+
+app.controller('PlaylistDCtrl', function($scope, $routeParams, Playlist) {
+  console.log($routeParams.playlistID);
+  Playlist.delete({playlistID:$routeParams.playlistID});
+  $scope.playlists = Playlist.query();
+});
 
 app.controller('PlaylistCtrl', function($scope, Playlist) {
   $scope.playlists = Playlist.query();
 });
-
-/////////////////////////////////
 
 app.controller('PlayCtrl', function($scope, $routeParams, Playlist, $log, audioControl) {
   $scope.playlist = Playlist.get({playlistID:$routeParams.playlistID});

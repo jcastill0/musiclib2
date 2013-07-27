@@ -50,7 +50,10 @@ app.factory('Playlist', function ($resource) {
 	  {playlistID:'@playlistID'},
 	  {query: {
 		method:'GET', params:{playlistID:'playlists'}, isArray:true
-		}
+		},
+	   delete: {
+		method:'DELETE'
+		   }
 	  });
   return (playlistRsrc);
 });
