@@ -13,10 +13,24 @@ app.controller('MyCtrl2', function() {});
 */
 app.controller('WelcomeCtrl', function() {});
 
+app.controller('AuthCtrl', function($scope, authService, $log) {
+  $scope.loggedIn = null;
+  $scope.loginName = null;
+  $scope.password = null;
+  $scope.login = function () {
+    authService.login($scope);
+  };
+  $scope.logout = function() {
+    authService.logout();
+    $scope.loggedIn = "false";
+  };
+});
+
+
 ///////////////////////////////
 
-app.controller('PlaylistDCtrl', function($scope, $routeParams, Playlist) {
-  console.log($routeParams.playlistID);
+app.controller('PlaylistDCtrl', function($scope, $routeParams, $log, Playlist) {
+  $log.log($routeParams.playlistID);
   Playlist.delete({playlistID:$routeParams.playlistID});
   $scope.playlists = Playlist.query();
 });

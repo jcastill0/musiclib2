@@ -19,7 +19,7 @@
       }
   </style>
 </head>
-<body>
+<body ng-controller="AuthCtrl">
   <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container">
@@ -30,16 +30,19 @@
 	    <li><a ng-href="#about">About</a></li>
 	    <li><a ng-href="#contact">Contact</a></li>
 	  </ul>
-	  <form class="navbar-form pull-right" action="/musicapp/musiclib/login/" method="post">
-	    <input class="span2" type="text" placeholder="Login name" name="username">
-	    <input class="span2" type="password" placeholder="Password" name="password">
+	  <form class="navbar-form pull-right" ng-submit="login()" ng-hide="loggedIn">
+	    <input class="span2" type="text" placeholder="Login name" name="username" ng-model="loginName"/>
+	    <input class="span2" type="password" placeholder="Password" name="password" ng-model="password"/>
 	    <button type="submit" class="btn">Sign in</button>
+	  </form>
+	  <form class="navbar-form pull-right" ng-submit="logout()" ng-show="loggedIn">
+	    <button type="submit" class="btn">Logout</button>
 	  </form>
 	</div> 
       </div> 
     </div>
   </div>
-  <ul class="menu">
+  <ul class="menu" ng-show="loggedIn">
     <!--li><a ng-href="#/view1">view1</a></li>
     <li><a ng-href="#/view2">view2</a></li-->
     <li><a ng-href="#/index">Welcome</a></li>

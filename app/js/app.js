@@ -46,14 +46,14 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl: 'partials/profile/userDetail.html',
 		controller: 'UserDetailCtrl'
 	    })
-	/*.when('/view1', {
-		templateUrl: 'partials/partial1.html',
-		controller: 'MyCtrl1'
+	.when('/auth/login', {
+		templateUrl: 'partials/welcome.html',
+		controller: 'AuthCtrl'
 	    })
-	.when('/view2', {
-		templateUrl: 'partials/partial2.html',
-		controller: 'MyCtrl2'
-	    })*/
+	.when('/auth/logout', {
+		templateUrl: 'partials/welcome.html',
+		controller: 'AuthCtrl'
+	    })
 	.otherwise({redirectTo: '/index'});
 
     //$locationProvider.html5Mode(true);

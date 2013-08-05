@@ -8,16 +8,29 @@
 
 app.value('version', '0.2');
 
-app.service('userService', function ($http) {
-    this.getUserDetail = function (userID) {
-	$http.get('data/user_' + userID + '.json')
-		.success(function(data) {
-			return (data);
+app.service('authService', function ($http, $log) {
+    this.login = function (scope) {
+	var credentials = "{\"loginName\":\""+scope.loginName+"\",\"password\":\""+scope.password +"\"}";
+	$http.post('data/auth/login', credentials)
+		.success(function() {
+			scope.loggedIn = true;
+			return (true);
 		})
-		.error(function(data) {
-			return (data || "Request failed");
+		.error(function(data, status, headers, config) {
+			$log.log("Login Error: " + status);
+			scope.loggedIn = true;	// for now
+			return (false);
 		});
-	return null;
+    };
+    this.logout = function() {
+	$http.get('data/auth/logout')
+		.success(function() {
+			return(true);
+		})
+		.error(function(data, status, headers, config) {
+			$log.log("Logout Error: " + status);
+			return ("Request failed:" + status);
+		});
     };
 });
 
