@@ -13,16 +13,24 @@ app.controller('MyCtrl2', function() {});
 */
 app.controller('WelcomeCtrl', function() {});
 
-app.controller('AuthCtrl', function($scope, authService, $log) {
+app.controller('AuthCtrl', function($scope, authService, $log, $location) {
   $scope.loggedIn = null;
   $scope.loginName = null;
   $scope.password = null;
   $scope.login = function () {
-    authService.login($scope);
+    var formData = {
+	'loginName' : $scope.loginName,
+	'password'  : $scope.password
+    };
+    formData = JSON.stringify(formData);
+    authService.login($scope, formData);
+    $scope.password = null;
   };
   $scope.logout = function() {
     authService.logout();
     $scope.loggedIn = "false";
+    $scope.password = null;
+    $location.path('/');
   };
 });
 
@@ -162,7 +170,6 @@ app.controller('UserDetailCtrl', function($scope, $routeParams, $log, $location,
   $scope.user = User.get({userID:$routeParams.userID});
 
   $scope.save = function () {
-	$log.log($scope.user.firstName);
 	User.save({userID:$routeParams.userID}, $scope.user, function(user) {
 		$log.log (user);
 	});

@@ -9,10 +9,10 @@
 app.value('version', '0.2');
 
 app.service('authService', function ($http, $log) {
-    this.login = function (scope) {
-	var credentials = "{\"loginName\":\""+scope.loginName+"\",\"password\":\""+scope.password +"\"}";
-	$http.post('data/auth/login', credentials)
-		.success(function() {
+    this.login = function (scope, formData) {
+	$http.post('data/auth/login', formData)
+		.success(function(data, status, headers, config) {
+			$log.log("SUCCESS: " + data);
 			scope.loggedIn = true;
 			return (true);
 		})
@@ -24,7 +24,7 @@ app.service('authService', function ($http, $log) {
     };
     this.logout = function() {
 	$http.get('data/auth/logout')
-		.success(function() {
+		.success(function(data, status, headers, config) {
 			return(true);
 		})
 		.error(function(data, status, headers, config) {
