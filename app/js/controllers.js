@@ -2,15 +2,6 @@
 
 /* Controllers */
 
-/*
-angular.module('myMusicLib.controllers', [])
-  .controller('MyCtrl1',      [function() {}])
-  .controller('MyCtrl2',      [function() {}])
-  .controller('PlaylistCtrl', [function($scope) {
-  }]);
-app.controller('MyCtrl1', function() {});
-app.controller('MyCtrl2', function() {});
-*/
 app.controller('WelcomeCtrl', function() {});
 
 app.controller('AuthCtrl', function($scope, authService, $log, $location) {
@@ -38,16 +29,18 @@ app.controller('AuthCtrl', function($scope, authService, $log, $location) {
 ///////////////////////////////
 
 app.controller('PlaylistDCtrl', function($scope, $routeParams, $log, Playlist) {
-  $log.log($routeParams.playlistID);
+  $log.log("PlaylistDCtrl:" + $routeParams.playlistID);
   Playlist.delete({playlistID:$routeParams.playlistID});
   $scope.playlists = Playlist.query();
 });
 
-app.controller('PlaylistCtrl', function($scope, Playlist) {
+app.controller('PlaylistCtrl', function($scope, $log, Playlist) {
+  $log.log("PlaylistCtrl");
   $scope.playlists = Playlist.query();
 });
 
 app.controller('PlayCtrl', function($scope, $routeParams, Playlist, $log, audioControl) {
+  $log.log("PlayCtrl:" + $routeParams.playlistID);
   $scope.playlist = Playlist.get({playlistID:$routeParams.playlistID});
   var ix = 0;
   $scope.currentlyPlaying = null;
@@ -57,7 +50,7 @@ app.controller('PlayCtrl', function($scope, $routeParams, Playlist, $log, audioC
 	  return;
       }
       var song = $scope.playlist.songs[ix];
-      $log.log("Play["+ix+"]: " + song.name);
+      $log.log("PlayCtrl.addEventListener.cb Play["+ix+"]: " + song.name);
       audioControl.src = song.path;
       audioControl.play();
       $scope.currentlyPlaying = song.name;
@@ -70,25 +63,27 @@ app.controller('PlayCtrl', function($scope, $routeParams, Playlist, $log, audioC
 	  return;
       }
       var song = $scope.playlist.songs[ix];
-      $log.log("Play["+ix+"]: " + song.name);
+      $log.log("PlayCtrl.startPlaying.cb Play["+ix+"]: " + song.name);
       audioControl.src = song.path;
       audioControl.play();
       $scope.currentlyPlaying = song.name;
   };
 });
 
-//////////////////////////////////
 
 app.controller('PlaylistDetailCtrl', function($scope, $routeParams, Playlist, Song, $location, $log) {
+  $log.log("PlaylistDetailCtrl:" + $routeParams.playlistID);
   $scope.playlist = Playlist.get({playlistID:$routeParams.playlistID});
   $scope.songs = Song.query();
 
   $scope.addSong = function(song) {
+    $log.log("PlaylistDetailCtrl.addSong: " + song.name);
     $scope.playlist.songs.push(song);	// add to playlist
   };
   $scope.removeSong = function(song) {
     var songIDtoBeRemoved = song.id;
     var index = 0;
+    $log.log ("PlaylistDetailCtrl.removeSong: " + song.name);
     angular.forEach($scope.playlist.songs, function(song) {
 	if (song.id == songIDtoBeRemoved) {
 	    $scope.playlist.songs.splice(index, 1);
@@ -98,9 +93,9 @@ app.controller('PlaylistDetailCtrl', function($scope, $routeParams, Playlist, So
   };
 
   $scope.save = function() {
-    $log.log($scope.playlist.name);
+    $log.log("PlaylistDetailCtrl.save: " + $scope.playlist.name);
     Playlist.save({playlistID:$routeParams.playlistID}, $scope.playlist, function (playlist) {
-	$log.log(playlist);
+	$log.log("PlaylistDetailCtrl.save.cb: " + playlist.name);
 	$location.path('/');
     });
   };
@@ -109,11 +104,13 @@ app.controller('PlaylistDetailCtrl', function($scope, $routeParams, Playlist, So
 /////////////////////////////////////
 
 app.controller('ArtistCtrl', function($scope, Artist) {
+  $log.log("ArtistCtrl");
   $scope.artists = Artist.query();
 });
 
 
 app.controller('ArtistDetailCtrl', function($scope, $routeParams, $log, $location, Artist, Playlist) {
+  $log.log("ArtistDetailCtrl:" + $routeParams.artistID);
   $scope.artist = Artist.get({artistID:$routeParams.artistID});
   $scope.playlists = Playlist.query();
   var songs = [];
@@ -128,20 +125,22 @@ app.controller('ArtistDetailCtrl', function($scope, $routeParams, $log, $locatio
 	alert("No songs added");
 	return;
     }
-    $log.log(selectedPlaylist.name);
+    $log.log("ArtistDetailCtrl.save:" + selectedPlaylist.name);
     angular.forEach (songs, function (song) {
 	selectedPlaylist.songs.push (song);
     });
     Playlist.save({playlistID:selectedPlaylist.id}, selectedPlaylist, function (playlist) {
-	$log.log(playlist);
+	$log.log("ArtistDetailCtrl.Playlist.save.cb:" + playlist.name);
 	$location.path('/');
     });
   };
 
   function addSongToPlaylist(song) {
+    $log.log("ArtistDetailCtrl.addSongToPlaylist: " + song.name);
     songs.push(song); 
   };
   function removeSongFromPlaylist(song) {
+    $log.log("ArtistDetailCtrl.removeSongFromPlaylist: " + song.name);
     var songIDtoBeRemoved = song.id;
     var index = 0;
     angular.forEach(songs, function(song) {
@@ -153,6 +152,7 @@ app.controller('ArtistDetailCtrl', function($scope, $routeParams, $log, $locatio
   };
 
   $scope.songChecked = function(song, checkedValue) {
+    $log.log("ArtistDetailCtrl.songChecked: " + song.name);
     if (checkedValue) {
 	addSongToPlaylist(song);
     } else {
@@ -161,17 +161,19 @@ app.controller('ArtistDetailCtrl', function($scope, $routeParams, $log, $locatio
   };
 
   $scope.playlistSelected = function (playlist) {
+    $log.log("ArtistDetailCtrl.playlistSelected: " + playlist.name);
     selectedPlaylist = Playlist.get({playlistID:playlist.id});
   };
 });
 
 
 app.controller('UserDetailCtrl', function($scope, $routeParams, $log, $location, User) {
+  $log.log("UserDetailCtrl:" + $routeParams.userID);
   $scope.user = User.get({userID:$routeParams.userID});
 
   $scope.save = function () {
 	User.save({userID:$routeParams.userID}, $scope.user, function(user) {
-		$log.log (user);
+		$log.log ("UserDetailCtrl.save.cb:" + user);
 	});
 	$location.path('/');
   };
